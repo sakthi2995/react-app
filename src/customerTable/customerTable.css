@@ -1,0 +1,13 @@
+.active {
+  cursor: pointer;
+}
+
+.disabled {
+  background-color: lightgrey;
+  cursor: not-allowed;
+}
+
+.tableWidth {
+  width: 50% !important;
+  margin: 25px;
+}

@@ -1,0 +1,9 @@
+{
+  "homepage": {
+    "id": "ID",
+    "firstname": "First Name",
+    "lastname": "Last Name",
+    "location": "Location",
+    "province": "Province"
+  }
+}
