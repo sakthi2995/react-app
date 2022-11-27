@@ -1,4 +1,4 @@
-import { Fragment, memo, useEffect, useMemo, useState } from "react";
+import { Fragment, memo, useMemo, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Modal from "react-bootstrap/Modal";
 import { useTranslation } from "react-i18next";
@@ -7,6 +7,7 @@ import { ICustomer, TCustomerKeys } from "../App.types";
 import { ICustomerTable } from "./customerTable.types";
 
 import ApiError from "../apiError";
+import { useCustomer } from "./useCustomer";
 
 import "./customerTable.css";
 
@@ -15,33 +16,8 @@ const { Body, Header, Title } = Modal;
 const CustomerTable = ({ customers, firstCustomer }: ICustomerTable) => {
   const { t } = useTranslation();
   const [show, setShow] = useState<boolean>(false);
-  const [showError, setShowError] = useState<boolean>(false);
+  const { showError, setShowError } = useCustomer(firstCustomer);
   const [selectedCustomer, setSelectedCustomer] = useState<ICustomer>();
-
-  useEffect(() => {
-    if (firstCustomer) {
-      const payload = {
-        firstname: btoa(JSON.stringify(firstCustomer)),
-        timestamp: new Date().toISOString(),
-      };
-      fetch(`${process.env.REACT_APP_API_BASE_URL}/customer`, {
-        method: "POST",
-        body: JSON.stringify(payload),
-        headers: {
-          "Content-Type": "application/json",
-          "x-client-id": "12345",
-          "Access-Control-Allow-Origin": "*",
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log("Customer info posted successfully.");
-        })
-        .catch(() => {
-          setShowError(true);
-        });
-    }
-  }, [firstCustomer]);
 
   const handleRowClick = (e: any, customer: ICustomer) => {
     e.preventDefault();
